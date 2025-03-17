@@ -12,14 +12,14 @@ class Pelicula(models.Model):
     titulo = models.CharField(max_length=200)
     sinopsis = models.TextField()
     director = models.CharField(max_length=100)
-    fecha_estreno = models.DateField()
+    fecha_estreno = models.IntegerField()
     genero = models.ForeignKey(Genero, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.titulo
     
 
-class Reseña(models.Model):
+class Resena(models.Model):
     pelicula = models.ForeignKey(Pelicula, on_delete=models.PROTECT)
     autor = models.CharField(max_length=100, null=True, blank = True)
     puntuacion = models.IntegerField()
