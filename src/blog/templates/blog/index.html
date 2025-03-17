@@ -1,3 +1,5 @@
+{% extends 'blog/base.html' %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,10 +8,15 @@
     <title>Blog de Peliculas</title>
 </head>
 <body>
+    
+    
+    {% block content %}
     <h1>Blog de Peliculas - Mirabel</h1>
     <p>Bienvenido a nuestro blog de películas, donde podrás encontrar información sobre las mejores peliculas de la historia moderna.</p>
     <br>
+    <br>
     <h2>Peliculas</h2>
+    <br>
 
     {% for pelicula in peliculas %}
     <h3>{{ pelicula.titulo }}</h3>
@@ -19,11 +26,19 @@
     {% for resena in resenas %}
         {% if resena.pelicula.id == pelicula.id %} 
             <p><h4>Calificación: {{ resena.puntuacion }}</h4></p>
-            <p><h4>Reseña:</h4> {{ resena.comentario }}</p> 
+            <p><h4>Reseña:</h4> {{ resena.comentario }}
+                <h6>Autor: {{ resena.autor }}</h6>
+            </p> 
+
         {% endif %}
     {% endfor %}
     <br>
     {% endfor %}
+        
+    {% endblock content %}
 
 </body>
 </html>
+
+    
+    

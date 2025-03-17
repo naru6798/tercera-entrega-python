@@ -11,3 +11,9 @@ def index(request):
         'peliculas': peliculas,  
         'resenas': resenas 
     })
+
+def proximos_estrenos(request):
+    return render(request, 'blog/proximos-estrenos.html')
+
+
+     
