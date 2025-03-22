@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>Resultados de la búsqueda para "{{ query }}"</h1>
+    
+    {% if peliculas %}
+        <ul>
+            {% for pelicula in peliculas %}
+                <li>
+                    <h3>{{ pelicula.titulo }}</h3>
+                    <p>Género: {{ pelicula.genero.nombre }}</p>
+                    <p>Descripción: {{ pelicula.descripcion }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron películas que coincidan con tu búsqueda.</p>
+    {% endif %}
+{% endblock content %}

@@ -1,6 +1,18 @@
 <nav>
     <ul>
         <li><a href="{% url 'blog:index' %}">Inicio</a></li>
-        <li><a href="{% url 'blog:proximos-estrenos' %}">Próximos estrenos - 2025</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'blog:proximos-estrenos' %}">Próximos estrenos - 2025</a></li>
+            <form action="{% url 'blog:logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+            </form>
+        {% else %}
+            <li><a href="{% url 'blog:login' %}">Iniciar sesión</a></li>
+        {% endif %}
+        <form method="get" action="{% url 'blog:buscar' %}">
+            <input type="text" name="busqueda" placeholder="Buscar peli..." required>
+            <button type="submit">Buscar</button>
+        </form>
     </ul>
 </nav>

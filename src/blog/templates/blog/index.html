@@ -16,8 +16,12 @@
     {% block content %}
     <h1>Blog de Peliculas - Mirabel</h1>
     <img src="{% static 'blog/peliculas.webp' %}" alt="Peliculas" height = 70% width=100%>
-    <p>Bienvenido a nuestro blog de películas, donde podrás encontrar información sobre las mejores peliculas de la historia moderna.</p>
-    <br>
+    {% if user.is_authenticated %}
+        <p>Bienvenido a nuestro blog de películas, donde podrás encontrar información sobre las mejores peliculas de la historia moderna.</p>
+    {% else %}
+        <p>Bienvenido a nuestro blog de películas, donde podrás encontrar información sobre las mejores peliculas de la historia moderna.</p>
+        <p>Para ver próximos estrenos, inicia sesión.</p>
+    {% endif %}
     <br>
     <h2>Peliculas</h2>
     <br>
@@ -45,7 +49,7 @@
             {% endif %}
         {% endfor %}
 
-        <form method="post" style="background-color: antiquewhite; padding: 15px; ">
+        <form method="post" style="background-color: rgb(186, 185, 185); padding: 15px; ">
             {% csrf_token %}
             <input type="hidden" name="pelicula_id" value="{{ pelicula.id }}">
             {{ form.as_p }}

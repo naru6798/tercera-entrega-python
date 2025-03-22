@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Genero, Pelicula, Resena
 from . import models, forms
+from django.contrib.auth.views import LoginView
+from .forms import LoginForm
+from django.urls import reverse_lazy
 
 def index(request):
     generos = Genero.objects.all()
@@ -57,7 +60,17 @@ def resena_delete(request, pk):
         return redirect('blog:index')
     return render(request, 'blog/resena_delete.html', {'query': query})
 
+class MiLoginView(LoginView):
+    template_name = 'blog/login.html'
+    authentication_form = LoginForm
+    next_page = reverse_lazy('blog:index')
 
+def buscar(request):
+    busqueda = request.GET.get('busqueda')
 
-
-     
+    if busqueda:
+        peliculas = Pelicula.objects.filter(titulo__icontains=busqueda)
+    else:
+        peliculas = Pelicula.objects.all()
+    
+    return render(request, 'blog/buscar.html', {'peliculas': peliculas})
