@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
 
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +15,7 @@
     
     {% block content %}
     <h1>Blog de Peliculas - Mirabel</h1>
+    <img src="{% static 'blog/peliculas.webp' %}" alt="Peliculas" height = 70% width=100%>
     <p>Bienvenido a nuestro blog de películas, donde podrás encontrar información sobre las mejores peliculas de la historia moderna.</p>
     <br>
     <br>
@@ -19,19 +23,36 @@
     <br>
 
     {% for pelicula in peliculas %}
-    <h3>{{ pelicula.titulo }}</h3>
-    <h4>Género: {{ pelicula.genero.nombre }}</h4>
+        <h3>{{ pelicula.titulo }}</h3>
+        <h4>Género: {{ pelicula.genero.nombre }}</h4>
 
 
-    {% for resena in resenas %}
-        {% if resena.pelicula.id == pelicula.id %} 
-            <p><h4>Calificación: {{ resena.puntuacion }}</h4></p>
-            <p><h4>Reseña:</h4> {{ resena.comentario }}
-                <h6>Autor: {{ resena.autor }}</h6>
-            </p> 
+        {% for resena in resenas %}
+            {% if resena.pelicula.id == pelicula.id %} 
+                <p><h4>Calificación: {{ resena.puntuacion }}</h4></p>
+                <p><h4>Reseña:</h4> {{ resena.comentario }}
+                    <h6>Autor: {{ resena.autor }}</h6>
+                </p> 
 
-        {% endif %}
-    {% endfor %}
+                <form method="get" action="{% url 'blog:resena_update' pk=resena.id %}">
+                    <button type="submit">Editar reseña</button>
+                </form>
+                <form method="get" action="{% url 'blog:resena_delete' pk=resena.id %}">
+                    <button type="submit">Eliminar reseña</button>
+                </form>
+                <br>
+                <br>
+            {% endif %}
+        {% endfor %}
+
+        <form method="post" style="background-color: antiquewhite; padding: 15px; ">
+            {% csrf_token %}
+            <input type="hidden" name="pelicula_id" value="{{ pelicula.id }}">
+            {{ form.as_p }}
+            <button type="submit">Enviar reseña</button>
+            <br>
+            <br>
+        </form>
     <br>
     {% endfor %}
         
